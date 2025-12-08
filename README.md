@@ -1,3 +1,9 @@
+
+# 개요
+next.js 학습을 위한 repo로 배포 및 여러 프로젝트에 집합
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
