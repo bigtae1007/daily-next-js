@@ -1,9 +1,9 @@
-import React from 'react';
+import EduUi from "src/features/edu";
 
 const Page = () => {
     return (
         <div>
-            11231
+            <EduUi />
         </div>
     );
 };
