@@ -1,5 +1,7 @@
-export default function TestPage() {
-  throw new Error('일부로 에러를 발생시켜봅니다.');
+import { delay } from "src/shared/utils/delay";
 
+export default async function TestPage() {
+
+  await delay(5000)
   return <div>hello Test Page</div>;
 }
