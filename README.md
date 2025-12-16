@@ -165,5 +165,54 @@ export async function DELETE() {}
 사용하는 컴포넌트 내에서도 가능하지만 next.js route로 묶었을 때 관리하기 용이하여 많이 사용하며,<br>
 클라이언트 컴포넌트에 경우 CORS 또는 보안에 문제가 발생할 수 있기 때문에 공통적으로 요청 관련 코드는 서버 코드로 만들어 보안적인 강점을 가져갑니다.
 
+## 동적 라우팅 
+### 동적 라우트 세그먼트 
+사용 방법 : [folder]
+<br>
+매개변수를 받을 수 있습니다.
+<br>
+```aiignore
+# 경로 https://...../edu/[folder]
+매개변수 params에 folder에 대한 값이 들어옵니다.
 
+https://.../edu/test로 접근 시  
+params = {folder: 'test'}
+```
+### Catch-all 세그먼트
+사용 방법 : [...folder]
+<br>
+매개변수를 list 형태로 받습니다.
+<br>
+```aiignore
+# 경로 https://...../edu/[...folder]
+매개변수 params에 folder에 대한 값이 리스트 형태로 들어옵니다.
+
+https://.../edu/test로 접근 시  
+params = {folder: ['test']}
+https://.../edu/test/A로 접근 시  
+params = {folder: ['test','A']}
+https://.../edu/test/A/B로 접근 시  
+params = {folder: ['test','A','B']}
+```
+### 선택적 Catch-all 세그먼트
+사용 방법 : [[...folder]]
+<br>
+매개변수를 list 형태로 받습니다.
+위까지는 Catch-all 세그먼트와 동일하나 다른점은 뒤 경로가 없어도 경로가 일치된다는 점입니다.
+<br>
+```aiignore
+# 경로 https://...../edu/[...folder]
+매개변수 params에 folder에 대한 값이 리스트 형태로 들어옵니다.
+
+https://.../edu/test로 접근 시  
+params = {folder: ['test']}
+https://.../edu/test/A로 접근 시  
+params = {folder: ['test','A']}
+
+https://.../edu로 접근 시  
+params = {folder: undefined} 
+# Catch-all 세그먼트에 경우 edu/[...folder]/page.tsx가 보여지지 않습니다.
+# edu/page.tsx가 렌더링 됨 
+# 하지만 선택적 세그먼트에서는 edu/[[...folder]]/page.tsx가 렌더링 됩니다.
+```
 
