@@ -2,7 +2,6 @@ import TestUi from "src/features/edu/test";
 import { delay } from "src/shared/utils/delay";
 
 export default async function TestPage() {
-  await fetch("http://localhost:3000/api/a/b/c");
   await delay(2000)
 
   return (
