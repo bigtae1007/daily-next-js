@@ -165,7 +165,19 @@ export async function DELETE() {}
 사용하는 컴포넌트 내에서도 가능하지만 next.js route로 묶었을 때 관리하기 용이하여 많이 사용하며,<br>
 클라이언트 컴포넌트에 경우 CORS 또는 보안에 문제가 발생할 수 있기 때문에 공통적으로 요청 관련 코드는 서버 코드로 만들어 보안적인 강점을 가져갑니다.
 
-## 동적 라우팅 
+## 동적 라우팅  && 평행 경로
+기본적으로 경로는 폴더 구조에 맞게 적용됩니다. 하지만 몇몇 특이한 조건 및 경로 방법이 있습니다. 
+- 해당 폴더 내에 Page가 있어야합니다.
+```angular2html
+/edu/test라는 주소 로접근을 했을 때
+test 폴더 내에 page.tsx가 있다면 layout까지 포함한 UI가 화면에 보여지지만 
+page.tsx가 없다면 layout도 무시되고 404 주소를 찾을 수 없습니다.
+
+하지만 경로 마지막 폴더 내에 page.tsx가 있다면 중간 경로에 page.tsx가 없더라도 layout은 렌더링 할 수 있습니다. 
+/edu/test/not-have-page/have-page
+이런 주소가 있다면 have-page 폴더 내에 page.tsx가 있다면 중간 경로에 page.tsx가 없더라도 렌더링이 가능합니다.
+```
+
 ### 동적 라우트 세그먼트 
 사용 방법 : [folder]
 <br>
@@ -216,3 +228,4 @@ params = {folder: undefined}
 # 하지만 선택적 세그먼트에서는 edu/[[...folder]]/page.tsx가 렌더링 됩니다.
 ```
 
+## 
