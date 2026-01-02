@@ -1,9 +1,13 @@
 import TestUi from "src/features/edu/test";
-import { delay } from "src/shared/utils/delay";
 
+export const dynamic = "force-static"
 export default async function TestPage() {
-  await fetch("http://localhost:3000/api/a/b/c");
-  await delay(2000)
+  const resonse = await fetch("http://localhost:8080/edu", {
+    // next: { tags: ["test"], revalidate: 10 },
+    cache :'force-cache'
+  });
+  const data = await resonse.json();
+  console.log(data);
 
   return (
     <div>
@@ -12,3 +16,7 @@ export default async function TestPage() {
     </div>
   );
 }
+
+//1766901475934
+//1766901491254
+//1766901545864
