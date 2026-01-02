@@ -27,6 +27,14 @@ fetch + UI컴포넌트 호출 정도만 정의<br/>
 레이아웃 정의 파일.<br/>
 
 page.tsx가 내부 children으로 들어온다 .<br/>
+<br>
+**app/layout.tsx**에 경우 html 태그가 필요합니다. 웹에서 Root가 됩니다. 
+따라서 해당 부분에 대부분 global CSS, 라이브러리 Provider 등 전역 설정만 합니다. 
+<br>
+UI가 들어갈 경우 다른 페이지에서 해당 UI 제거하기 어렵기 때문
+<br>
+
+**만일 app/layout.tsx를 설정하지 않고 각 경로에 설정할 경우 루트가 되는 layout.tsx에 html 태그가 필요합니다.**
 
 첫 렌더링 이후에는 초기화 안됨 <br/>
 &nbsp; 즉. use client에 경우 useEffect를 사용하면 clean up이 실행되지 않음<br/>
@@ -228,4 +236,9 @@ params = {folder: undefined}
 # 하지만 선택적 세그먼트에서는 edu/[[...folder]]/page.tsx가 렌더링 됩니다.
 ```
 
-## 
+## 페이지 캐시 
+서버 컴포넌트에서 fetch에 옵션을 추가하여 데이터를 캐싱할 수 있다. (이건 next가 처리해주는 것)
+<br>
+예시로 기본적으로 페이지에 대한 캐싱 (SSG, ISR 등)은 next에서 자동으로 계산을 해준다<br> 동적으로 계산하는게 없으며 fetch 옵션이 force-cache라면 SSG, revalidate가 있다면 ISR, 동적 계산이 있다면 SSR 
+<br>
+즉 fetch에 캐싱 옵션을 통해 자동으로 정해지기에 크게 신경쓰지 않아도 되지만 상단 `dynamic="force-static"`같은 옵션을 통해 덮어쓸 수 있다.
