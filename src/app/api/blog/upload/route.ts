@@ -1,6 +1,7 @@
 // app/api/upload/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { insertFileName } from "src/entities/blog/api";
 
 const s3 = new S3Client({
   region: process.env.AWS_REGION,
@@ -27,7 +28,7 @@ export async function POST(req: NextRequest) {
       await s3.send(
         new PutObjectCommand({
           Bucket: "blog-zip-file",
-          Key: `blog/gits/${fileName}`,
+          Key: `blog/add/${fileName}`,
           Body: buffer,
           ContentType: file.type,
         }),
@@ -53,6 +54,8 @@ export async function POST(req: NextRequest) {
         });
       }
     });
+
+    insertFileName(successFiles);
 
     return NextResponse.json({ message: "Success", successFiles, failedFiles }, { status: 200 });
   } catch (error) {

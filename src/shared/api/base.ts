@@ -12,11 +12,6 @@ export const API: AxiosInstance = axios.create({
 // 2. 요청 인터셉터 (Request Interceptor)
 API.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    // 예: 로컬 스토리지에서 토큰을 가져와 헤더에 삽입
-    const token = localStorage.getItem("accessToken");
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
     return config;
   },
   (error: AxiosError) => {
@@ -28,7 +23,7 @@ API.interceptors.request.use(
 API.interceptors.response.use(
   (response) => {
     // 서버 응답 데이터만 바로 반환하도록 설정 가능
-    return response;
+    return response.data;
   },
   async (error: AxiosError) => {
     if (error.response) {
