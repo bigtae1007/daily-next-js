@@ -38,14 +38,14 @@ export async function POST(req: NextRequest) {
 
     const results = await Promise.allSettled(uploadPromises);
 
-    const successFiles: string[] = [];
+    const successFiles: { fileName: string }[] = [];
     const failedFiles: { fileName: string; reason: string }[] = [];
 
     results.forEach((result, index) => {
       const fileName = files[index].name;
 
       if (result.status === "fulfilled") {
-        successFiles.push(fileName);
+        successFiles.push({ fileName });
       } else {
         failedFiles.push({
           fileName,
@@ -53,7 +53,6 @@ export async function POST(req: NextRequest) {
         });
       }
     });
-
 
     return NextResponse.json({ message: "Success", successFiles, failedFiles }, { status: 200 });
   } catch (error) {

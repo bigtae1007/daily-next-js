@@ -11,5 +11,5 @@ export const uploadBlogZipFile = async (files: File[]) => {
     formData.append("files", file);
   });
 
-  await selfApiPostFormData(ENDPOINT.UPLOAD_BLOG_ZIP, formData);
+  return await selfApiPostFormData<UploadResponse>(ENDPOINT.UPLOAD_BLOG_ZIP, formData);
 };
