@@ -23,7 +23,5 @@ export async function GET(req: NextRequest) {
 
   const token = await tokenRes.json();
 
-  console.log(token); // access_token, id_token 확인
-
-  return Response.redirect(new URL("/", req.url));
+  return Response.redirect(new URL("/home", req.url));
 }
