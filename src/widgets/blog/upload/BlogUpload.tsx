@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import JSZip from "jszip";
+import { cn } from "src/shared/utils/cn";
+import { isEmpty } from "src/shared/utils/validate";
+import { uploadBlogZipFile } from "src/entities/blog/api";
+import { showAlert } from "src/shared/utils/alert";
 
 export const BlogUpload = () => {
   const [files, setFiles] = useState<File[]>();
@@ -15,7 +19,11 @@ export const BlogUpload = () => {
   };
 
   const handleUpload = async () => {
-    console.log(files, "filesfilesfiles");
+    if (files) {
+      uploadBlogZipFile(files);
+    } else {
+      showAlert("선택된 파일이 없습니다.");
+    }
     // if (!files) return;
     //
     // setStatus("압축 해제 중...");
@@ -71,7 +79,12 @@ export const BlogUpload = () => {
               onChange={onChangeUpload}
             />
           </div>
-          <button onClick={handleUpload} className={" cursor-pointer bg-gray-500 p-4 rounded-2xl"}>
+          <button
+            onClick={handleUpload}
+            className={cn("cursor-pointer bg-gray-500 p-4 rounded-2xl w-40 text-white", {
+              "bg-blue-300 text-gray-900": !isEmpty(files),
+            })}
+          >
             upload
           </button>
         </div>

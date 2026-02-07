@@ -15,19 +15,21 @@ export async function POST(req: NextRequest) {
     const formData = await req.formData();
     const files = formData.getAll("files") as File[];
 
+    const fileNames: string[] = [];
     const uploadPromises = files.map(async (file) => {
       const buffer = Buffer.from(await file.arrayBuffer());
       const fileName = file.name; // 클라이언트에서 보낸 'zip이름/파일명'
-
+      fileNames.push(fileName);
+      console.log(file, "filefile");
       // 1. S3 업로드
-      await s3.send(
-        new PutObjectCommand({
-          Bucket: process.env.AWS_S3_BUCKET,
-          Key: `uploads/${fileName}`,
-          Body: buffer,
-          ContentType: file.type,
-        }),
-      );
+      // await s3.send(
+      //   new PutObjectCommand({
+      //     Bucket: process.env.AWS_S3_BUCKET,
+      //     Key: `uploads/${fileName}`,
+      //     Body: buffer,
+      //     ContentType: file.type,
+      //   }),
+      // );
 
       // 2. 서버/DB에 특정 값 등록 로직 (예시)
       // await db.record.create({ data: { name: fileName, url: ... } });
