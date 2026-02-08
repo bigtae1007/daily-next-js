@@ -1,4 +1,4 @@
-interface UploadResponse {
+export interface UploadResponse {
   message: string;
   successFiles: SuccessResponse[];
   failedFiles: FailResponse[];
@@ -11,4 +11,10 @@ interface FailResponse {
 
 interface SuccessResponse {
   fileName: string;
+}
+
+export interface ZipFileResponse {
+  title: string;
+  content: string;
+  tags: string[];
 }
