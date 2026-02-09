@@ -21,7 +21,7 @@ const eslintConfig = defineConfig([
     },
     rules: {
       // 1) 디버깅 코드 방지
-      "no-console": ["warn", { allow: ["warn", "error"] }],
+      "no-console": ["warn", { allow: ["warn", "info", "error"] }],
       "no-debugger": "error",
 
       // 2) 불필요한 import / 변수 제거

@@ -1,10 +1,12 @@
 import { selfApi, selfApiPostFormData } from "src/shared/api/self";
 import { API } from "src/shared/api/base";
 import { UploadResponse, ZipFileResponse } from "src/entities/blog/types";
+import { CommonCodeResponse } from "src/entities/types";
 
 const ENDPOINT = {
   UPLOAD_BLOG_ZIP: "api/blog/upload",
   ENROLL_UPLOAD_FILE_NAME: "blog/upload",
+  UPDATE_FILE_DONE: "blog/done",
   UNZIP_S3: "api/blog/upzip",
 };
 
@@ -25,4 +27,8 @@ export const insertFileName = async (data: { fileName: string }[]) => {
 
 export const getContentInZip = async (name: string) => {
   return await selfApi.get<ZipFileResponse>(`${ENDPOINT.UNZIP_S3}?name=${name}`);
+};
+
+export const updateDoneFile = async (id: number) => {
+  return await API.post<CommonCodeResponse>(ENDPOINT.UPDATE_FILE_DONE, { id });
 };
