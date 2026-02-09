@@ -7,10 +7,11 @@ import toast from "react-hot-toast";
 
 interface Props {
   item: ZipFileResponse;
-  isOpen: boolean;
+  isFirst: boolean;
 }
-export const FileItem = ({ item, isOpen }: Props) => {
+export const FileItem = ({ item, isFirst }: Props) => {
   const [content, setContent] = useState<apiResponse>();
+  const [isOpen, setIsOpen] = useState(isFirst);
   const [isDone, setIsDone] = useState(false);
 
   const handleClickDone = async () => {
@@ -31,6 +32,10 @@ export const FileItem = ({ item, isOpen }: Props) => {
     }
   };
 
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+
   useEffect(() => {
     if (isOpen) {
       getContentInZip(item.name).then((res) => {
@@ -41,7 +46,9 @@ export const FileItem = ({ item, isOpen }: Props) => {
 
   return (
     <div hidden={isDone} className={"border border-blue-600 p-4"}>
-      <div className={"border border-blue-200 p-4"}>{item.name}</div>
+      <button onClick={handleOpen}>
+        <div className={"border border-blue-200 p-4"}>{item.name}</div>
+      </button>
       {content && (
         <div>
           <div className={"p-4"}>
