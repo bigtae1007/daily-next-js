@@ -5,7 +5,7 @@ import { CommonCodeResponse } from "src/entities/types";
 
 const ENDPOINT = {
   UPLOAD_BLOG_ZIP: "api/blog/upload",
-  ENROLL_UPLOAD_FILE_NAME: "blog/upload",
+  ENROLL_UPLOAD_FILE_NAME: "blogs/files",
   UPDATE_FILE_DONE: "blog/done",
   UNZIP_S3: "api/blog/upzip",
 };
