@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Select } from "antd";
 import { cn } from "src/shared/utils/cn";
 import { isEmpty } from "src/shared/utils/validate";
 import { uploadBlogZipFile } from "src/entities/blog/api";
@@ -8,6 +9,7 @@ import { showAlert } from "src/shared/utils/alert";
 
 export const BlogUpload = () => {
   const [files, setFiles] = useState<File[]>();
+  const [categoryId, setCategoryId] = useState<string>();
   const [success, setSuccess] = useState<string[]>([]);
   const [failed, setFailed] = useState<string[]>([]);
   const [failedReason, setFailedReason] = useState<string[]>([]);
@@ -21,8 +23,8 @@ export const BlogUpload = () => {
   };
 
   const handleUpload = async () => {
-    if (!isEmpty(files) && files) {
-      const res = await uploadBlogZipFile(files);
+    if (!isEmpty(files) && files && categoryId) {
+      const res = await uploadBlogZipFile(files, categoryId);
       const successFileName = findFileName(res.successFiles);
       const failedFileName = findFileName(res.failedFiles);
       const failedReason = findReason(res.failedFiles);
@@ -61,16 +63,31 @@ export const BlogUpload = () => {
               onChange={onChangeUpload}
             />
           </div>
-          <button
-            onClick={handleUpload}
-            className={cn("cursor-pointer bg-gray-500 p-4 rounded-2xl w-40 text-white", {
-              "bg-blue-300 text-gray-900": !isEmpty(files),
-            })}
-          >
-            upload
-          </button>
+          <div className={"border border-blue-200 rounded-2xl p-4 flex items-center gap-3"}>
+            <Select
+              allowClear
+              placeholder="카테고리 선택"
+              className={"w-48"}
+              options={[
+                { value: "1113274", label: "GIT" },
+                { value: "1144848", label: "FE" },
+              ]}
+              value={categoryId}
+              onChange={(value) => {
+                setCategoryId(value);
+              }}
+            />
+            <button
+              onClick={handleUpload}
+              className={cn("cursor-pointer bg-gray-500 p-4 rounded-2xl w-40 text-white", {
+                "bg-blue-300 text-gray-900": !isEmpty(files),
+              })}
+            >
+              upload
+            </button>
+          </div>
         </div>
-        <div className={'mb-4'}>
+        <div className={"mb-4"}>
           <div className={"flex gap-4 flex-wrap"}>
             <div className={"text-blue-500 mr-4"}>성공 파일:::</div>
             {success?.map((text) => (

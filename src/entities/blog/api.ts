@@ -10,19 +10,22 @@ const ENDPOINT = {
   UNZIP_S3: "api/blog/upzip",
 };
 
-export const uploadBlogZipFile = async (files: File[]) => {
+export const uploadBlogZipFile = async (files: File[], categoryId?: string) => {
   const formData = new FormData();
 
   files.forEach((file) => {
     formData.append("files", file);
   });
+  if (categoryId) {
+    formData.append("categoryId", categoryId);
+  }
 
   return await selfApiPostFormData<UploadResponse>(ENDPOINT.UPLOAD_BLOG_ZIP, formData);
 };
 
-export const insertFileName = async (data: { fileName: string }[]) => {
+export const insertFileName = async (data: { fileName: string }[], category?:string) => {
   const names = data.map((item) => item.fileName);
-  return await API.post(ENDPOINT.ENROLL_UPLOAD_FILE_NAME, { names });
+  return await API.post(ENDPOINT.ENROLL_UPLOAD_FILE_NAME, { names, category });
 };
 
 export const getContentInZip = async (name: string) => {

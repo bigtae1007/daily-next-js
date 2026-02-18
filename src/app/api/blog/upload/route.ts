@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
     const files = formData.getAll("files") as File[];
+    const categoryId = formData.get("categoryId")?.toString();
 
     // 파일 없으면 400 오류
     if (!files.length) {
@@ -55,7 +56,7 @@ export async function POST(req: NextRequest) {
       }
     });
 
-    insertFileName(successFiles);
+    insertFileName(successFiles, categoryId);
 
     return NextResponse.json({ message: "Success", successFiles, failedFiles }, { status: 200 });
   } catch (error) {
